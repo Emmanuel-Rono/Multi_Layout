@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewAdapter(context: Context, list: ArrayList<Data>) :
+class RecyclerViewAdapter(private val context: Context, val list: ArrayList<Data>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -15,49 +15,47 @@ class RecyclerViewAdapter(context: Context, list: ArrayList<Data>) :
         const val VIEW_TYPE_TWO = 2
     }
 
-    private val context: Context = context
-    var list: ArrayList<Data> = list
-
-    private inner class View1ViewHolder(itemView: View) :
+    class View1ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        var message: TextView = itemView.findViewById(R.id.textView)
-        fun bind(position: Int) {
-            val recyclerViewModel = list[position]
-            message.text = recyclerViewModel.textData
-        }
+        val message: TextView = itemView.findViewById(R.id.textView)
+       //
     }
 
-    private inner class View2ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        var message: TextView = itemView.findViewById(R.id.textView)
-        fun bind(position: Int) {
-            val recyclerViewModel = list[position]
-            message.text = recyclerViewModel.textData
-        }
+    class View2ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var message2: TextView = itemView.findViewById(R.id.textView)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_ONE) {
+        if
+                (viewType == VIEW_TYPE_ONE) {
             return View1ViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.item_view_1, parent, false)
             )
+        } else {
+            //   return View2ViewHolder(
+            val view = LayoutInflater.from(context).inflate(R.layout.item_view_2, parent, false)
+            return View2ViewHolder(view)
+            //)
         }
-        return View2ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_view_2, parent, false)
-        )
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (list[position].viewType === VIEW_TYPE_ONE) {
-            (holder as View1ViewHolder).bind(position)
-        } else {
-            (holder as View2ViewHolder).bind(position)
-        }
+    override fun onBindViewHolder(holder:RecyclerView.ViewHolder, position: Int) {
+
+        val data = list[position]
+
+
+
+
+
+
     }
+    //var list: ArrayList<Data> = list
+
 
     override fun getItemViewType(position: Int): Int {
         return list[position].viewType
